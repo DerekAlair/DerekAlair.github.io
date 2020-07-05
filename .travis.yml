@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+  - v12.18.1
+cache:
+  directories:
+  - node_modules
+
+install:
+- npm install
+script:
+- hexo clean
+- hexo generate
+- hexo deploy
+after_script:
+  - cd ./public
+  - git init
+  - git config user.name "提交人"
+  - git config user.email "提交人邮件地址"
+  - git add .
+  - git commit -m "TravisCI 自动部署"
+  # Coding Pages
+  - git push --force --quiet "https://0d6162285fd98555ba4fa979433c76e45c0837a1@//github.com/DerekAlair/DerekAlair.github.io.git" master:master
+
+branches:
+  only:
+  - master
